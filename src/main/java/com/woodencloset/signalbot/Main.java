@@ -1,13 +1,15 @@
 package com.woodencloset.signalbot;
 
-import com.woodencloset.signalbot.responders.DiceRollResponder;
-import com.woodencloset.signalbot.responders.HebrewDiceRollResponder;
+import com.woodencloset.signalbot.responders.MtgFetchResponder;
+
 import org.apache.commons.cli.*;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.whispersystems.libsignal.InvalidKeyException;
 
 import java.io.Console;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.Security;
 import java.util.prefs.BackingStoreException;
 
@@ -15,8 +17,7 @@ public class Main {
 
     static private SignalBot bot = new SignalBot();
 
-    public static void main(String[] args) throws IOException, InvalidKeyException, BackingStoreException {
-
+    public static void main(String[] args) throws IOException, InvalidKeyException, BackingStoreException, Exception {        
         Security.addProvider(new BouncyCastleProvider());
 
         Options options = new Options();
@@ -40,8 +41,7 @@ public class Main {
             System.exit(1);
         }
 
-        bot.addResponder(new DiceRollResponder());
-        bot.addResponder(new HebrewDiceRollResponder());
+        bot.addResponder(new MtgFetchResponder());
 
         if (cmd.hasOption("register")) {
             bot.register(cmd.getOptionValue("register"));
@@ -61,4 +61,3 @@ public class Main {
         }
     }
 }
-

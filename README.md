@@ -1,5 +1,5 @@
-# signal-bot
-This is a simple bot system for [Signal](https://github.com/signalapp) with minimal dependencies. Pure Java and cross platform.
+# signal-bot 
+This is a simple bot system for [Signal](https://github.com/signalapp) with minimal dependencies. Pure Java and cross platform. Modified to be used for fetching Magic the Gathering cards.
 
 ## Building
 `gradlew installDist` should generate a run script at 'build/install/signal-bot/bin/signal-bot'.
