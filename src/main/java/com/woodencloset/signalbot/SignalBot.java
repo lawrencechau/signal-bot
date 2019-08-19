@@ -209,16 +209,15 @@ public class SignalBot {
                                 String response = responder.getResponse(messageBody);
                                 if (response != null && !response.isEmpty()) {
                                     logger.info(responder.getClass().getSimpleName() + " sending response: " + response);
-                                    long quoteId = messageData.getTimestamp();
-                                    SignalServiceDataMessage.Quote quote = new SignalServiceDataMessage.Quote(quoteId, sender, messageBody, new LinkedList<>());
+                                    
                                     if (groupInfo != null) {
                                         List<SignalServiceAddress> groupMembers = groupIdToMembers.get(groupIdKey).stream().map(SignalServiceAddress::new).collect(Collectors.toList());
                                         List<Optional<UnidentifiedAccessPair>> uap = Collections.nCopies(groupMembers.size(), Optional.absent());
                                         SignalServiceGroup group = SignalServiceGroup.newBuilder(SignalServiceGroup.Type.DELIVER).withId(groupId).build();
-                                        SignalServiceDataMessage responseData = SignalServiceDataMessage.newBuilder().asGroupMessage(group).withQuote(quote).withBody(response).build();
+                                        SignalServiceDataMessage responseData = SignalServiceDataMessage.newBuilder().asGroupMessage(group).withBody(response).build();
                                         messageSender.sendMessage(groupMembers, uap, responseData);
                                     } else {
-                                        SignalServiceDataMessage responseData = SignalServiceDataMessage.newBuilder().withQuote(quote).withBody(response).build();
+                                        SignalServiceDataMessage responseData = SignalServiceDataMessage.newBuilder().withBody(response).build();
                                         messageSender.sendMessage(sender, Optional.absent(), responseData);
                                     }
                                 }
